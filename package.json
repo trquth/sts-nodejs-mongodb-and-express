@@ -1,0 +1,22 @@
+{
+  "name": "sts-nodejs-mongodb-and-express",
+  "version": "1.0.0",
+  "description": "\"This project has been builded to test NodeJS , ExpressJS and MongoDb\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trquth/sts-nodejs-mongodb-and-express.git"
+  },
+  "author": "ThienTran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trquth/sts-nodejs-mongodb-and-express/issues"
+  },
+  "homepage": "https://github.com/trquth/sts-nodejs-mongodb-and-express#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
