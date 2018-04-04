@@ -2,7 +2,7 @@
   "name": "sts-nodejs-mongodb-and-express",
   "version": "1.0.0",
   "description": "\"This project has been builded to test NodeJS , ExpressJS and MongoDb\"",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/trquth/sts-nodejs-mongodb-and-express#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "express3-handlebars": "^0.5.2"
   }
 }
