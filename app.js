@@ -1,29 +1,31 @@
 var express = require('express')
+var fortune = require('./lib/fortune')
+var seed = require('./lib/seed')
+var dumb1 = require('./lib/dumb1')
+var weather = require('./lib/weatherData')
+var app = express()
 
 var handlebars = require('express3-handlebars').create({
     helpers: {
-        studyStatus:  (averageScore) => {
-            return  averageScore > 5  ?  'has passed' : `hasn't passed`
-         },
-        showResultStudent : (data, options) => {
-            var returnData= ""
+        studyStatus: (averageScore) => {
+            return averageScore > 5 ? 'has passed' : `hasn't passed`
+        },
+        showResultStudent: (data, options) => {
+            var returnData = ""
             data.forEach(student => {
-                student.result =  student.averageScore > 5  ?   `${student.name} has passed` : `${student.name} hasn't passed`
+                student.result = student.averageScore > 5 ? `${student.name} has passed` : `${student.name} hasn't passed`
                 returnData = returnData + options.fn(student);
             });
 
             return returnData
         },
-        getFullYear : () => {
+        getFullYear: () => {
             return new Date().getFullYear()
         }
     },
     defaultLayout: 'main',
-    partialsDir : [
-        'views/partials/'
-    ]
 });
-var app = express()
+
 
 app.set('port', process.env.PORT || 3000)
 app.engine('handlebars', handlebars.engine)
@@ -31,44 +33,26 @@ app.set('view engine', 'handlebars')
 
 app.use(express.static(__dirname + '/public'))
 
-
-
-var fortunes = ["Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you don't know.",
-    "You will have a pleasant surprise.",
-    "Whenever possible, keep it simple.",];
-
-var tours = [{id: 0, name: 'Hood River', price: 99.99},
-{id: 1, name: 'Oregon Coast', price: 149.95},];
-
-var seed = {
-
-    currency: {name: 'United States dollars', abbrev: 'USD', },
-    tours: [
-        {name: 'Hood River', price: '$99.95'},
-        {name: 'Oregon Coast', price: '$159.95'}
-    ]
-    , specialsUrl: '/january-specials',
-    currencies: ['USD', 'GBP', 'BTC'],
-
-}
+app.use((req, res, next) => {
+    if (!res.locals.partials) res.locals.partials = {};
+    res.locals.partials.weatherContext = weather.getWeatherData();
+    next();
+})
 
 app.get('/', (req, res) => {
     res.render('home')
 })
 
 app.get('/about', (req, res) => {
-    var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render('about', {fortune: randomFortune})
+    res.render('about', {fortune: fortune.getFortune()})
 })
 
 app.get('/api/tours', (req, res) => {
-    res.json(tours)
+    res.json(seed.getTours())
 })
 
 app.get('/api/tour/:id', (req, res) => {
-    var p = tours.some((item) => item.id == req.params.id)
+    var p = seed.getTours().some((item) => item.id == req.params.id)
     if (p) {
         res.json({success: true})
     } else {
@@ -77,37 +61,35 @@ app.get('/api/tour/:id', (req, res) => {
 })
 
 app.get('/tours', (req, res) => {
-    res.render('tours', seed)
+    res.render('tours', seed.getSeedData())
 })
 
 app.get('/handlebars', (req, res) => {
-    let dumb1 = {
-        "occupation": "developer",
-        "articlesUrl" : 'https://www.sitepoint.com/a-beginners-guide-to-handlebars/',
-        "website": {
-            "name": "sitepoint"
-        },
-        "names": [
-            {"firstName": "Ritesh", "lastName": "Kumar"},
-            {"firstName": "John", "lastName": "Doe"}
-        ],
-        "countries":["Russia","India","USA"],
-        "students":[
-            {"name" : "John", "averageScore" : 8},
-            {"name" : "Doe" , "averageScore" : 4}
-          ]
-    }
-    res.render('fundanmental-handlebar', dumb1)
+
+    res.render('fundanmental-handlebar', dumb1.getDumb1())
+})
+
+app.get('/tours/hood-river', (req, res) => {
+    res.render('tours/hood-river')
+})
+
+app.get('/tours/oregon-coast', (req, res) => {
+    res.render('tours/oregon-coast')
+})
+
+app.get('/tours/request-group-rate', (req, res) => {
+    res.render('tours/request-group-rate')
 })
 
 app.use((req, res) => {
+    res.status(400)
     res.render('400')
 })
 
 app.use((req, res) => {
+    res.status(500)
     res.render('500')
 })
-
 
 
 app.listen(app.get('port'), () => {
