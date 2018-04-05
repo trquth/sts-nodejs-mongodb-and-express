@@ -1,0 +1,42 @@
+<h1>Read on 
+    <a href={{articlesUrl}} target={_blank}>{{articlesUrl}}</a>
+</h1>
+<h2>The list authors: </h2>
+<ul style="list-style-type:none">
+    {{#each names}} 
+        <li>
+           <span>{{@index}} - {{firstName}} {{lastName}}</span>
+        </li>
+    {{/each}}
+</ul>
+<h2>The list countries: </h2>
+<ul style="list-style-type:none">
+    {{#if countries}}
+        {{#each countries}}
+            <li>
+                <span>{{@index}} - {{this}}</span>
+            </li>
+        {{/each}}
+    {{else}}
+        <p>There aren't country</p>
+    {{/if}}
+</ul>
+<h2>Custom function helper</h2>
+{{#each students}}
+    <ul style="list-style-type:none">
+        <li>
+            {{name}} {{studyStatus averageScore}} 
+        </li>
+    </ul>
+   
+{{/each}}
+
+<h2>Custom function helper</h2>
+{{#showResultStudent students}}
+    <ul style="list-style-type:none">
+        <li>
+            {{result}} {{name}}
+        </li>
+    </ul>
+    
+{{/showResultStudent}}

@@ -1,0 +1,13 @@
+<ul>
+    {{#each tours}}
+        <li>
+            {{name}} - {{price}}
+            {{#if ../currencies}}
+                ({{../../curency.abbrev}})
+            {{/if}}
+        </li>
+    {{/each}}
+</ul>
+{{#unless currencies}}
+    <p>  All prices in {{curency.name}}</p>
+{{#unless}}
