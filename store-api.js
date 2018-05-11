@@ -9,8 +9,10 @@ const discountRouters = require('./store/api/discount');
 
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads'));
-app.use(bodyParse.urlencoded({extended: true}));
+app.use(bodyParse.urlencoded({extended: false}));
+//app.use(bodyParse.urlencoded());
 app.use(bodyParse.json());
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(

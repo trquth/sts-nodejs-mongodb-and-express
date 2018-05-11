@@ -2,3 +2,4 @@
 //Ignore file for NodeJS MongoDb and ExpressJS Project
 node_modules/
 yarn-error.log
+uploads
