@@ -10,6 +10,7 @@ var productSchema = mongoo.Schema({
     thumbnailImage: {type: String},
     images: [{type: mongoo.Schema.Types.ObjectId, ref: "ProductImage"}],
     discount: {type: mongoo.Schema.Types.ObjectId, ref: "Discount"},
+    category: {type: mongoo.Schema.Types.ObjectId, ref: "Category"},
     createdDate: {type: Date, default: Date.now}
 })
 

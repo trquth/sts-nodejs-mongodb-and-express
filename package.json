@@ -4,7 +4,7 @@
   "description": "\"This project has been builded to test NodeJS , ExpressJS and MongoDb\"",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --reporter spec 'mongodb/test/*.js'",
     "start": "nodemon server.js"
   },
   "repository": {
@@ -25,5 +25,7 @@
     "morgan": "^1.9.0",
     "multer": "^1.3.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "^5.1.1"
+  }
 }
